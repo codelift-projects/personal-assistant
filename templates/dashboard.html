@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+<head><title>Dashboard</title></head>
+<body>
+    <h1>Dashboard - Welcome {{ user.name }}</h1>
+    <p>Role: {{ user.role }}</p>
+    <ul>
+        {% for task in user.tasks %}
+            <li>{{ task }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>
