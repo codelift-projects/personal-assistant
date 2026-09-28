@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Personal Assistant</title>
+    <title>Register - Personal Assistant</title>
     <style>
         * {
             margin: 0;
@@ -98,36 +98,20 @@
             box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
         }
 
-        .register-link {
+        .login-link {
             text-align: center;
             margin-top: 20px;
             color: #666;
         }
 
-        .register-link a {
+        .login-link a {
             color: #667eea;
             text-decoration: none;
             font-weight: 600;
             transition: opacity 0.3s;
         }
 
-        .register-link a:hover {
-            opacity: 0.8;
-        }
-
-        .home-link {
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        .home-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-size: 14px;
-            transition: opacity 0.3s;
-        }
-
-        .home-link a:hover {
+        .login-link a:hover {
             opacity: 0.8;
         }
 
@@ -149,12 +133,30 @@
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
+
+        .password-requirements {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .password-requirements ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        .password-requirements li {
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="logo">📋</div>
-        <h1>Welcome Back</h1>
+        <h1>Create Account</h1>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -172,18 +174,28 @@
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <input type="password" id="password" name="password" placeholder="Enter a strong password" required>
             </div>
 
-            <button type="submit" class="btn">Login</button>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+            </div>
+
+            <div class="password-requirements">
+                <strong>Requirements:</strong>
+                <ul>
+                    <li>Valid email address</li>
+                    <li>Password at least 6 characters</li>
+                    <li>Passwords must match</li>
+                </ul>
+            </div>
+
+            <button type="submit" class="btn">Register</button>
         </form>
 
-        <div class="register-link">
-            Don't have an account? <a href="{{ url_for('register') }}">Register here</a>
-        </div>
-
-        <div class="home-link">
-            <a href="{{ url_for('home') }}">← Back to Home</a>
+        <div class="login-link">
+            Already have an account? <a href="{{ url_for('login') }}">Login here</a>
         </div>
     </div>
 </body>

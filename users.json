@@ -1,0 +1,14 @@
+{
+  "admin@admin.com": {
+    "password": "scrypt:32768:8:1$c9vpWSjP5yVxZcWx$2b2f5d437c6e15c6c72c1a9905914c2fdcd3f834e8fe30fce65dcc0ababd6fa4d5745d5e622743c8d8cd4057855ff8c4f726c2350fb1608bbd6ffdfdeb45f2a6",
+    "created_at": "2026-09-28 13:59:20",
+    "role": "admin",
+    "is_admin": true
+  },
+  "sun.test@xyz.com": {
+    "password": "scrypt:32768:8:1$BEbvNBW1pqf1jo8I$3ce6be071f0c0d966bee4248038c13309d739a1627f4cf78be0b4e7d1344a08f302ecc089bc8c413471090f3963ccf7a1279b369f7749fc9902d87a305188aa8",
+    "created_at": "2026-09-28 13:59:54",
+    "role": "user",
+    "is_admin": false
+  }
+}
