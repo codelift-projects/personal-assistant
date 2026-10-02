@@ -1,0 +1,51 @@
+{
+  "users": [
+    {
+      "id": "u_001",
+      "username": "prince@",
+      "password": "123",
+      "email": "prince@example.com",
+      "name": "Prince",
+      "role": "user",
+      "status": "active",
+      "preferences": {
+        "dayStart": "07:00",
+        "dayEnd": "23:00",
+        "theme": "dark"
+      },
+      "createdAt": "2025-01-01T10:00:00+05:30",
+      "lastLoginAt": "2025-01-05T18:20:00+05:30"
+    },
+    {
+      "id": "u_002",
+      "username": "aditya",
+      "password": "885690",
+      "email": "aditya@gmail.com",
+      "name": "Aditya",
+      "role": "user",
+      "status": "active",
+      "timezone": "Asia/Kolkata",
+      "preferences": {
+        "dayStart": "08:00",
+        "dayEnd": "22:00",
+        "theme": "light"
+      },
+      "createdAt": "2025-01-02T09:00:00+05:30",
+      "lastLoginAt": null
+    },
+    {
+      "id": "u_003",
+      "name": "Prince Tiwari",
+      "email": "princetiwari9511@gmail.com",
+      "username": "prince@1",
+      "password": "1122"
+    },
+    {
+      "id": "u_004",
+      "name": "1qaz",
+      "email": "qaz@gmail.com",
+      "username": "fg",
+      "password": "sdfvbnmyygv"
+    }
+  ]
+}
