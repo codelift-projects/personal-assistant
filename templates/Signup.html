@@ -3,7 +3,9 @@
 <head>
   <title>Sign Up</title>
   <style>
-  .ok {
+    * { box-sizing: border-box; }
+
+    body {
       margin: 0;
       min-height: 100vh;
       display: flex;
@@ -12,19 +14,92 @@
       font-family: Arial, Helvetica, sans-serif;
       background: #f4f4f4;
     }
+
+    .card {
+      background: #fff;
+      padding: 30px 35px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 340px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #222;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #2563eb;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .msg {
+      color: red;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .bottom {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .bottom a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .bottom a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
-<body >
-  <h1>Sign Up</h1>
+<body>
 
-  <form method="POST" action="/signup" class="ok">
-    <input type="text"     name="name"     placeholder="Full Name"  required><br><br><br>
-    <input type="email"    name="email"    placeholder="Email"      required><br><br>
-    <input type="text"     name="username" placeholder="Username"   required><br><br>
-    <input type="password" name="password" placeholder="Password"   required><br><br>
-    <button type="submit">Sign Up</button>
-  </form>
+  <div class="card">
+    <h1>Sign Up</h1>
 
-  <p>Already have an account? <a href="/login">Login</a></p>
+    <form method="POST" action="/signup">
+      <input type="text"     name="name"     placeholder="Full Name" required>
+      <input type="email"    name="email"    placeholder="Email"     required>
+      <input type="text"     name="username" placeholder="Username"  required>
+      <input type="password" name="password" placeholder="Password"  required>
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <p class="bottom">Already have an account? <a href="/login">Login</a></p>
+  </div>
+
 </body>
 </html>

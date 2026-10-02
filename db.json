@@ -32,20 +32,6 @@
       },
       "createdAt": "2025-01-02T09:00:00+05:30",
       "lastLoginAt": null
-    },
-    {
-      "id": "u_003",
-      "name": "Prince Tiwari",
-      "email": "princetiwari9511@gmail.com",
-      "username": "prince@1",
-      "password": "1122"
-    },
-    {
-      "id": "u_004",
-      "name": "1qaz",
-      "email": "qaz@gmail.com",
-      "username": "fg",
-      "password": "sdfvbnmyygv"
     }
   ]
 }
