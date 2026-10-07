@@ -7,19 +7,7 @@ app.secret_key = 'encryptionKey'
 
 BASE = Path(__file__).parent
 DB_FILE = BASE / "db.json"
-
-
-def load_db():
-    if not DB_FILE.exists():
-        return {"users": []}
-    try:
-        return json.loads(DB_FILE.read_text(encoding="utf-8"))
-    except json.JSONDecodeError:
-        return {"users": []}
-
-
-def save_db(data):
-    DB_FILE.write_text(json.dumps(data, indent=2), encoding="utf-8")
+USERDATA_FILE = BASE / "userdata.json"
 
 
 @app.route('/')
@@ -33,7 +21,9 @@ def login():
         username = request.form.get('username', '').strip()
         password = request.form.get('password', '').strip()
 
-        db = load_db()
+        with open(DB_FILE, "r") as f:
+            db = json.load(f)
+
         for u in db["users"]:
             if u["username"] == username and u["password"] == password:
                 session['user'] = u["username"]
@@ -59,7 +49,8 @@ def signup():
             flash("All fields are required")
             return redirect(url_for('signup'))
 
-        db = load_db()
+        with open(DB_FILE, "r") as f:
+            db = json.load(f)
 
         for u in db["users"]:
             if u["username"].lower() == username.lower():
@@ -74,7 +65,9 @@ def signup():
             "password": password
         }
         db["users"].append(new_user)
-        save_db(db)
+
+        with open(DB_FILE, "w") as f:
+            json.dump(db, f, indent=2)
 
         flash("Account created. Please login.")
         return redirect(url_for('login'))
@@ -89,8 +82,7 @@ def dashboard():
 
     data = {
         'name': session.get('name', session.get('user')),
-        'role': 'admin',
-        'tasks': ['task1', 'task2']
+        'achivement': session.get('achivement', session.get('user')),
     }
     return render_template('dashboard.html', user=data)
 

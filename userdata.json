@@ -1,0 +1,25 @@
+
+    {
+        "users": [
+        {
+            "id": "u_001",
+            "goals":["Java Basics" , "lift 150kgs deadlift"],
+            "progress":["20%","80kgs"],
+            "Achivements":["Completed Python intermidiate", "completed SQL basic"],
+            "projects": [
+                {
+                "id": 1,
+                "name": "Calculator",
+                "photo": "images/calculator.png",
+                "link": "#"
+                },
+                {
+                "id": 2,
+                "name": "To do App",
+                "photo": "images/todo.png",
+                "link": "#"
+                }
+            ]
+        }
+    ]
+}
