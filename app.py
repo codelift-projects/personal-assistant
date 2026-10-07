@@ -9,11 +9,12 @@ BASE = Path(__file__).parent
 DB_FILE = BASE / "db.json"
 USERDATA_FILE = BASE / "userdata.json"
 
-
+global user
 @app.route('/')
 def home():
+    with open(DB_FILE, "r") as f:
+        db = json.load(f)
     return render_template('home.html')
-#changes
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -23,15 +24,22 @@ def login():
 
         with open(DB_FILE, "r") as f:
             db = json.load(f)
+        with open(USERDATA_FILE, "r") as f:
+                    user1 = json.load(f)
 
         for u in db["users"]:
             if u["username"] == username and u["password"] == password:
                 session['user'] = u["username"]
                 session['userId'] = u["id"]
                 session['name'] = u.get("name", u["username"])
+                # session['Achivements'] = u.get("name", u["Achivements"])
+                for d in user1["users"]:
+                    if u["id"] == d['id']:
+                        session['Achivements'] = d.get("name", d["Achivements"])
+                        session['projects'] =  d["projects"]
+                
                 return redirect(url_for('dashboard'))
-
-        flash("Invalid username or password")
+            
         return redirect(url_for('login'))
 
     return render_template('login.html')
