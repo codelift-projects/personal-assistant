@@ -9,11 +9,13 @@ BASE = Path(__file__).parent
 DB_FILE = BASE / "db.json"
 USERDATA_FILE = BASE / "userdata.json"
 
-global user
+global users
 @app.route('/')
 def home():
     with open(DB_FILE, "r") as f:
         db = json.load(f)
+    with open(USERDATA_FILE, "r") as g:
+        userdata = json.load(g)
     return render_template('home.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -24,19 +26,22 @@ def login():
 
         with open(DB_FILE, "r") as f:
             db = json.load(f)
-        with open(USERDATA_FILE, "r") as f:
-                    user1 = json.load(f)
-
+        with open(USERDATA_FILE, "r") as g:
+            userdata = json.load(g)
+        
         for u in db["users"]:
             if u["username"] == username and u["password"] == password:
                 session['user'] = u["username"]
                 session['userId'] = u["id"]
                 session['name'] = u.get("name", u["username"])
+                
                 # session['Achivements'] = u.get("name", u["Achivements"])
-                for d in user1["users"]:
+                for d in userdata["users"]:
                     if u["id"] == d['id']:
                         session['Achivements'] = d.get("name", d["Achivements"])
+                        session['userdata'] = userdata
                         session['projects'] =  d["projects"]
+                        
                 
                 return redirect(url_for('dashboard'))
             
@@ -90,7 +95,8 @@ def dashboard():
 
     data = {
         'name': session.get('name', session.get('user')),
-        'achivement': session.get('achivement', session.get('user')),
+        'achivement': session.get('achivement', session.get('user'))
+        
     }
     return render_template('dashboard.html', user=data)
 
