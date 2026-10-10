@@ -19,6 +19,9 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" >Welcome, {{user.name}}</a>
+        </li>
         
           <li class="nav-item ">
             <a href="/logout" class="nev-link  btn btn-outline-danger mt-3" >Logout</a>
@@ -30,6 +33,58 @@
 </nav></div>
 
 
+  <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark text-white"
+      style="width: 250px; height: 100vh;">
+
+      <a href="#" class="d-flex align-items-center mb-3 text-white text-decoration-none">
+          <span class="fs-4">NexQuest</span>
+      </a>
+
+      <hr>
+
+      <ul class="nav nav-pills flex-column mb-auto">
+
+          <li class="nav-item">
+              <a href="#" class="nav-link active">Dashboard</a>
+          </li>
+
+          <li>
+              <a href="#" class="nav-link text-white">Goals</a>
+          </li>
+
+          <li>
+              <a href="#" class="nav-link text-white">Projects</a>
+          </li>
+
+          <li>
+              <a href="#" class="nav-link text-white">Tasks</a>
+          </li>
+
+          <li>
+              <a href="#" class="nav-link text-white">Achievements</a>
+          </li>
+
+          <li>
+              <a href="#" class="nav-link text-white">Skills</a>
+          </li>
+
+          <li>
+              <a href="#" class="nav-link text-white">Work Logs</a>
+          </li>
+
+          <li>
+              <a href="#" class="nav-link text-white">Settings</a>
+          </li>
+
+      </ul>
+
+      <hr>
+
+      <div>My Account</div>
+
+  </div>
+
+
   <div class="card" style="width: 18rem;">
   <img src="..." class="card-img-top" alt="...">
   <div class="card-body">
@@ -39,8 +94,9 @@
   </div>
 </div>
   <div >
-    <h2>Welcome, {{ session.get('user', 'guest') }}</h2>
-    <p class="text-muted">User ID: {{ session.get('userId', '-') }}</p>
+    <h2>Welcome, {{user.name}}</h2>
+    <p class="text-muted">User ID: {{ user.achivement }}</p>
+    <p>{{session.get('userdata', '-')}} helooooo</p>
     <p>This is the Dashboard</p>
     <a href="/logout" class="btn btn-outline-danger mt-3">Logout</a>
     <p class="text-muted">Achivements: {{ session.get('Achivements', '-') }}</p>
