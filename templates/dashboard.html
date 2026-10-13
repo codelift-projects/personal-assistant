@@ -20,7 +20,7 @@
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" >Welcome, {{user.name}}</a>
+          <a class="nav-link active fw-bold fs-4" aria-current="page"" aria-current="page" >Welcome, {{user.name}}</a>
         </li>
         
           <li class="nav-item ">
@@ -33,67 +33,41 @@
 </nav></div>
 
 
-  <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark text-white"
-      style="width: 250px; height: 100vh;">
+  <!--  SIDEBAR  -->
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark text-white"
+         style="width: 250px; height: 100vh; position: sticky; top: 0;">
 
       <a href="#" class="d-flex align-items-center mb-3 text-white text-decoration-none">
-          <span class="fs-4">NexQuest</span>
+        <span class="fs-4">NexQuest</span>
       </a>
 
       <hr>
 
       <ul class="nav nav-pills flex-column mb-auto">
-
-          <li class="nav-item">
-              <a href="#" class="nav-link active">Dashboard</a>
-          </li>
-
-          <li>
-              <a href="#" class="nav-link text-white">Goals</a>
-          </li>
-
-          <li>
-              <a href="#" class="nav-link text-white">Projects</a>
-          </li>
-
-          <li>
-              <a href="#" class="nav-link text-white">Tasks</a>
-          </li>
-
-          <li>
-              <a href="#" class="nav-link text-white">Achievements</a>
-          </li>
-
-          <li>
-              <a href="#" class="nav-link text-white">Skills</a>
-          </li>
-
-          <li>
-              <a href="#" class="nav-link text-white">Work Logs</a>
-          </li>
-
-          <li>
-              <a href="#" class="nav-link text-white">Settings</a>
-          </li>
-
+        <li class="nav-item">
+          <a href="/dashboard" class="nav-link active">Dashboard</a>
+        </li>
+        <li><a href="#" class="nav-link text-white">Goals</a></li>
+        <li><a href="/projects" class="nav-link text-white">Projects</a></li>
+        <li><a href="#" class="nav-link text-white">Tasks</a></li>
+        <li><a href="#" class="nav-link text-white">Achievements</a></li>
+        <li><a href="#" class="nav-link text-white">Skills</a></li>
+        <li><a href="#" class="nav-link text-white">Work Logs</a></li>
+        <li><a href="#" class="nav-link text-white">Settings</a></li>
       </ul>
 
       <hr>
 
-      <div>My Account</div>
+      <div class="d-flex justify-content-between align-items-center">
+        <span>My Account</span>
+        <a href="/logout" class="btn btn-sm btn-outline-danger">Logout</a>
+      </div>
+    </div>
 
-  </div>
-
-
-  <div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
-  <div >
+  <p>{{ session.get('userdata')}}
+          
+  <!--
+   <div >
     <h2>Welcome, {{user.name}}</h2>
     <p class="text-muted">User ID: {{ user.achivement }}</p>
     <p>{{session.get('userdata', '-')}} helooooo</p>
@@ -102,6 +76,7 @@
     <p class="text-muted">Achivements: {{ session.get('Achivements', '-') }}</p>
     <p class="text-muted">projects: {{ session.get('projects', '-') }}</p>
   </div>
+   -->
 
 
 </body>

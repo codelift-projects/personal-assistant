@@ -10,6 +10,7 @@ DB_FILE = BASE / "db.json"
 USERDATA_FILE = BASE / "userdata.json"
 
 global users
+global userdata
 @app.route('/')
 def home():
     with open(DB_FILE, "r") as f:
@@ -100,6 +101,36 @@ def dashboard():
     }
     return render_template('dashboard.html', user=data)
 
+
+@app.route('/projects')
+def projects():
+    if not session.get('user'):
+        return redirect(url_for('login'))
+    
+    with open(DB_FILE, "r") as f:
+        db = json.load(f)
+
+    with open(USERDATA_FILE, "r") as f:
+        userdata = json.load(f)
+
+    user_id = session.get('userId')
+    user_exists = any(u["id"] == user_id for u in db["users"])
+
+    if not user_exists:
+        return redirect(url_for('login'))
+
+    user_data = {}
+
+    for u in userdata["users"]:
+        if u["id"] == user_id:
+            user_data = u
+            break
+
+    projects = user_data.get("projects", [])
+
+    return render_template('projects.html', projects=projects)
+
+        
 
 @app.route('/logout')
 def logout():
