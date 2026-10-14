@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Personal Assistant</title>
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -297,6 +299,55 @@
             border: 1px solid #bee5eb;
         }
 
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            margin: 0 auto;
+        }
+
+        .chart-title {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -322,6 +373,23 @@
 
             .add-task-form input {
                 min-width: 100%;
+            }
+
+            .chart-container {
+                padding: 20px;
+            }
+
+            .chart-wrapper {
+                max-width: 300px;
+                height: 250px;
+            }
+
+            .chart-legend {
+                gap: 15px;
+            }
+
+            .legend-item {
+                font-size: 12px;
             }
         }
     </style>
@@ -363,6 +431,24 @@
                 <div class="label">Pending</div>
                 <div class="progress-bar">
                     <div class="progress-fill" style="width: {% if user.total > 0 %}{{ ((user.total - user.completed) / user.total * 100) | int }}{% else %}0{% endif %}%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task Status Pie Chart -->
+        <div class="chart-container">
+            <div class="chart-title">📈 Task Status Distribution</div>
+            <div class="chart-wrapper">
+                <canvas id="taskStatusChart"></canvas>
+            </div>
+            <div class="chart-legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #28a745;"></div>
+                    <span>Completed: {{ user.completed }}</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ffc107;"></div>
+                    <span>Pending: {{ user.total - user.completed }}</span>
                 </div>
             </div>
         </div>
@@ -428,5 +514,88 @@
             {% endif %}
         </div>
     </div>
+
+    <script>
+        // Task Status Pie Chart
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('taskStatusChart');
+            if (ctx) {
+                const completed = {{ user.completed }};
+                const pending = {{ user.total - user.completed }};
+                const total = {{ user.total }};
+
+                // Only show chart if there are tasks
+                if (total > 0) {
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['✓ Completed', '⏳ Pending'],
+                            datasets: [{
+                                data: [completed, pending],
+                                backgroundColor: [
+                                    '#28a745',  // Green for completed
+                                    '#ffc107'   // Yellow for pending
+                                ],
+                                borderColor: [
+                                    '#1e7e34',
+                                    '#e0a800'
+                                ],
+                                borderWidth: 2,
+                                borderRadius: 8,
+                                hoverOffset: 10
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'bottom',
+                                    labels: {
+                                        padding: 15,
+                                        font: {
+                                            size: 14,
+                                            weight: 'bold'
+                                        },
+                                        color: '#333'
+                                    }
+                                },
+                                tooltip: {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                    titleFont: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    },
+                                    bodyFont: {
+                                        size: 13
+                                    },
+                                    padding: 12,
+                                    titleMarginBottom: 8,
+                                    callbacks: {
+                                        label: function(context) {
+                                            const label = context.label || '';
+                                            const value = context.parsed;
+                                            const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                            return label + ': ' + value + ' (' + percentage + '%)';
+                                        }
+                                    }
+                                }
+                            },
+                            animation: {
+                                animateRotate: true,
+                                animateScale: false,
+                                duration: 1000,
+                                easing: 'easeInOutQuart'
+                            }
+                        }
+                    });
+                } else {
+                    // Hide chart if no tasks
+                    document.querySelector('.chart-container').style.display = 'none';
+                }
+            }
+        });
+    </script>
 </body>
-</html>
+</html>%                                       
