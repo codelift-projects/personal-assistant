@@ -4,17 +4,18 @@ import json
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)
 
-
+global user 
+   
 # 1. Home page
 @app.route('/')
 def home():
     return render_template('home.html')
 
-
 # 2. Login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if session.get('user'):
+
+    if session.get('user_id'):
         return redirect(url_for('dashboard'))
 
     error = None
@@ -23,11 +24,18 @@ def login():
         username = request.form.get('username', '').strip()
         password = request.form.get('password', '')
 
-        withopen(user.json,"r")
-        
-            return redirect(url_for('dashboard'))
+        with open("User.json", "r") as f:
+            data = json.load(f)
 
-        error = 'Invalid username or password.'
+        for user in data["users"]:
+            if username == user["username"] and password == user["password"]:
+                session.clear()
+                session["user"] = user["username"]
+                session["user_id"] = user["user_id"]  # Added here
+
+                return redirect(url_for("dashboard"))
+
+        error = "Invalid username or password."
 
     return render_template('login.html', error=error)
 # # 3.signup
@@ -40,8 +48,7 @@ def signup():
         print("Username :",username)
         print("Password :",password)
         print("DOB :",dob)
-        return
-    render_template("signup.html")
+    return render_template("signup.html")
 
 # with open ("User.json","r") as f:
 #     user =json.load(f) 
@@ -73,7 +80,7 @@ def dashboard():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
 
 
 if __name__ == '__main__':

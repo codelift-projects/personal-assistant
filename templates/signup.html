@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>signup</title>
+    <title>Create Account</title>
 
     <style>
         * {
@@ -16,62 +16,218 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 24px;
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #e0e7ff, #f0fdfa);
             color: #1e293b;
         }
 
-        .box {
+        .signup-box {
             width: 100%;
-            max-width: 450px;
-            padding: 40px;
+            max-width: 480px;
+            padding: 32px;
             background: white;
-            text-align: center;
             border-radius: 20px;
             box-shadow: 0 15px 40px #00000015;
         }
 
         h1 {
-            margin: 0 0 15px;
+            margin: 0 0 10px;
+            font-size: 28px;
         }
 
-        p {
+        .subtitle {
+            margin: 0 0 24px;
             color: #64748b;
-            line-height: 1.6;
-            margin-bottom: 30px;
+            line-height: 1.5;
         }
 
-        .button {
-            display: inline-block;
-            padding: 14px 30px;
-            background: #4f46e5;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
+        .name-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .field {
+            flex: 1;
+            min-width: 0;
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
             font-weight: bold;
         }
 
-        .button:hover {
+        input {
+            width: 100%;
+            min-width: 0;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: #f8fafc;
+            color: #1e293b;
+            font: inherit;
+        }
+
+        input:focus {
+            outline: 2px solid #4f46e5;
+            outline-offset: 2px;
+            background: white;
+        }
+
+        .hint {
+            display: block;
+            margin-top: 7px;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #4f46e5;
+            color: white;
+            font: inherit;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
             background: #4338ca;
         }
 
-        .button:focus-visible {
-            outline: 3px solid #4f46e5;
+        a {
+            color: #4338ca;
+        }
+
+        button:focus-visible,
+        a:focus-visible {
+            outline: 2px solid #4f46e5;
             outline-offset: 4px;
+        }
+
+        .login-link {
+            margin: 22px 0 0;
+            text-align: center;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .error {
+            padding: 12px;
+            background: #fef2f2;
+            color: #b91c1c;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 420px) {
+            .name-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .signup-box {
+                padding: 24px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <main class="box">
-        <h1>Welc</h1>
-        <p>Access your dashboard, view your profile, and check your tasks.</p>
+    <main class="signup-box">
+        <h1>Create your account</h1>
+        <p class="subtitle">
+            Start organizing your tasks and goals.
+        </p>
 
-        <a href="/login" class="button">
-           Go to Login
-            
-        </a>
+        {% if error %}
+            <p class="error" role="alert">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('signup') }}">
+
+            <div class="field">
+                <label for="username">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Choose a username"
+                    value="{{ request.form.get('username', '') }}"
+                    autocomplete="username"
+                    minlength="3"
+                    required
+                >
+            </div>
+
+            <div class="name-row">
+                <div class="field">
+                    <label for="first_name">First Name</label>
+                    <input
+                        type="text"
+                        id="first_name"
+                        name="first_name"
+                        placeholder="First name"
+                        value="{{ request.form.get('first_name', '') }}"
+                        autocomplete="given-name"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="last_name">Last Name</label>
+                    <input
+                        type="text"
+                        id="last_name"
+                        name="last_name"
+                        placeholder="Last name"
+                        value="{{ request.form.get('last_name', '') }}"
+                        autocomplete="family-name"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Create a password"
+                    autocomplete="new-password"
+                    minlength="8"
+                    aria-describedby="password-hint"
+                    required
+                >
+                <small class="hint" id="password-hint">
+                    Use at least 8 characters.
+                </small>
+            </div>
+
+            <div class="field">
+                <label for="dob">Date of Birth</label>
+                <input
+                    type="date"
+                    id="dob"
+                    name="dob"
+                    value="{{ request.form.get('dob', '') }}"
+                    autocomplete="bday"
+                    required
+                >
+            </div>
+
+            <button type="submit">Create Account</button>
+        </form>
+
+        <p class="login-link">
+            Already have an account?
+            <a href="{{ url_for('login') }}">Log In</a>
+        </p>
     </main>
 </body>
 </html>
