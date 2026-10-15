@@ -89,17 +89,32 @@ def signup():
     return render_template('signup.html')
 
 
+
 @app.route('/dashboard')
 def dashboard():
     if not session.get('user'):
         return redirect(url_for('login'))
 
+    with open(USERDATA_FILE, "r") as g:
+        all_userdata = json.load(g)
+
+    user_data = {"goals": []}
+
+    for u in all_userdata["users"]:
+        if u["id"] == session.get("userId"):
+            user_data = u
+            break
+
     data = {
         'name': session.get('name', session.get('user')),
         'achivement': session.get('achivement', session.get('user'))
-        
     }
-    return render_template('dashboard.html', user=data)
+
+    return render_template(
+        'dashboard.html',
+        user=data,
+        userdata=user_data
+    )
 
 
 @app.route('/projects')
@@ -115,12 +130,9 @@ def projects():
 
     user_id = session.get('userId')
     user_exists = any(u["id"] == user_id for u in db["users"])
-
     if not user_exists:
         return redirect(url_for('login'))
-
     user_data = {}
-
     for u in userdata["users"]:
         if u["id"] == user_id:
             user_data = u

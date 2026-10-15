@@ -3,19 +3,40 @@
         "users": [
         {
             "id": "u_001",
-            "goals":["Java Basics" , "lift 150kgs deadlift"],
-            "progress":["20%","80kgs"],
+            "goals":[
+                {
+                "name":"Java basics",
+                "progress":70
+            },
+            {
+                "name":"lift 150kgs deadlift",
+                "progress":80
+            },
+            {
+                "name":"BGMI Ace",
+                "progress":99
+            }
+        ],
             "Achivements":["Completed Python intermidiate", "completed SQL basic"],
             "projects": [
                 {
                 "id": 1,
                 "name": "Calculator",
                 "photo": "images/calculator.png",
+                "discription":"calculates every normal calculations as it is a calculator",
                 "link": "#"
                 },
                 {
                 "id": 2,
-                "name": "To do App",
+                "name": "Inventory Management System",
+                "discription": "An inventory management system is a useful prototype which can track live stock available in our database",
+                "photo": "images/todo.png",
+                "link": "#"
+                },
+                {
+                "id": 3,
+                "name": "Personal Assistant",
+                "discription": "An inventory management system is a useful prototype which can track live stock available in our database",
                 "photo": "images/todo.png",
                 "link": "#"
                 }
