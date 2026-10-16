@@ -117,11 +117,15 @@ def dashboard():
     )
 
 
-@app.route('/projects')
+import uuid
+import json
+from flask import request, redirect, url_for, render_template, session
+
+@app.route('/projects', methods=['GET', 'POST'])
 def projects():
     if not session.get('user'):
         return redirect(url_for('login'))
-    
+
     with open(DB_FILE, "r") as f:
         db = json.load(f)
 
@@ -129,18 +133,53 @@ def projects():
         userdata = json.load(f)
 
     user_id = session.get('userId')
-    user_exists = any(u["id"] == user_id for u in db["users"])
+
+    user_exists = any(
+        str(u["id"]) == str(user_id)
+        for u in db["users"]
+    )
+
     if not user_exists:
         return redirect(url_for('login'))
-    user_data = {}
+
+    user_data = None
+
     for u in userdata["users"]:
-        if u["id"] == user_id:
+        if str(u["id"]) == str(user_id):
             user_data = u
             break
 
+    if user_data is None:
+        return redirect(url_for('login'))
+
+    user_data.setdefault("projects", [])
+
+    if request.method == 'POST':
+        name = request.form.get("name", "").strip()
+        description = request.form.get("description", "").strip()
+        link = request.form.get("link", "").strip()
+
+        if not name or not description:
+            return redirect(url_for('projects'))
+
+        new_project = {
+            "id": str(len(userdata["users"]["projects"]) + 1),
+            "name": name,
+            "description": description,
+            "link": link
+        }
+
+        user_data["projects"].append(new_project)
+
+        with open(USERDATA_FILE, "w") as f:
+            json.dump(userdata, f, indent=4)
+
+        return redirect(url_for('projects'))
+
     projects = user_data.get("projects", [])
 
-    return render_template('projects.html', projects=projects)
+    return render_template( 'projects.html', projects=projects )
+
 
         
 
