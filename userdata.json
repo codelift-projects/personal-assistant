@@ -33,7 +33,7 @@
                     "name": "Inventory Management System",
                     "discription": "An inventory management system is a useful prototype which can track live stock available in our database",
                     "photo": "images/todo.png",
-                    "link": "#"
+                    "link": "https://www.linkedin.com/in/prince-tiwari-428649335"
                 },
                 {
                     "id": 3,
@@ -47,6 +47,12 @@
                     "name": "Movie ticket booking system",
                     "description": "it allows you to book available ticktet an the threather and reccommend you which ticket is mostly purchesded",
                     "link": "https://www.hackerrank.com/certificates/iframe/8665529df152"
+                },
+                {
+                    "id": "5",
+                    "name": "dcvbm,",
+                    "description": "sddeghgfws",
+                    "link": ""
                 }
             ]
         }

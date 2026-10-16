@@ -163,7 +163,7 @@ def projects():
             return redirect(url_for('projects'))
 
         new_project = {
-            "id": str(len(userdata["users"]["projects"]) + 1),
+            "id": str(len(user_data["projects"]) + 1),
             "name": name,
             "description": description,
             "link": link
