@@ -221,13 +221,44 @@
 </nav>
 </div>
 
-<div class="card w-75 mb-3 flex">
-  <div class="card-body">
-    <h4 class="card-title">Card title</h4>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn-solid theme-primary">Button</a>
-  </div>
-</div>
 
+<div class="card shadow-sm border-0 rounded-4 p-3">
+    <div class="d-flex align-items-center gap-3">
+
+        <img src="https://placehold.co/100x100"
+             class="rounded-circle"
+             width="80"
+             height="80"
+             alt="Profile Picture">
+
+        <div class="flex-grow-1">
+            <h4 class="mb-1">{{session.get('name')}}</h4>
+            <p class="text-secondary mb-2">CSE (AI) Student</p>
+
+            <span class="badge bg-primary">Developer</span>
+        </div>
+
+        <button class="btn btn-outline-primary btn-sm">
+            Edit Profile
+        </button>
+
+    </div>
+</div><br>
+
+<div class="card shadow-sm border-0 rounded-4 p-3">
+    <div class="d-flex align-items-center gap-3">
+
+        <div class="flex-grow-1">
+            <h4 class="mb-1">Personal Information</h4>
+            <h5 class=" mb-2">Email Address</h5>
+            <p class="text-secondary mb-2">{{session.get('email')}}</p>
+            <h5 class=" mb-2">Education</h5>
+            <h5 class=" mb-2">Joined at</h5>
+
+            <span class="badge bg-primary"></span>s
+        </div>
+
+    </div>
+</div>
 
 </body>

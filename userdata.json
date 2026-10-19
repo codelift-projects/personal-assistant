@@ -61,6 +61,68 @@
                     "link": "https://www.hackerrank.com/certificates/iframe/8665529df152"
                 }
             ]
+        },
+        {
+            "id": "u_002",
+            "goals": [
+                {
+                    "name": "FreeFire lover",
+                    "progress": 70
+                },
+                {
+                    "name": "become bar dancer",
+                    "progress": 80
+                },
+                {
+                    "name": "Become human",
+                    "progress": 7
+                }
+            ],
+            "Achivements": [
+                "Completed Python intermidiate",
+                "completed SQL basic"
+            ],
+            "projects": [
+                {
+                    "id": 1,
+                    "name": "Automatic Flushing System ",
+                    "photo": "images/calculator.png",
+                    "discription": "calculates every normal calculations as it is a calculator",
+                    "link": "#"
+                },
+                {
+                    "id": 2,
+                    "name": "Inventory Management System",
+                    "discription": "An inventory management system is a useful prototype which can track live stock available in our database",
+                    "photo": "images/todo.png",
+                    "link": "https://www.linkedin.com/in/prince-tiwari-428649335"
+                },
+                {
+                    "id": 3,
+                    "name": "Personal Assistant",
+                    "discription": "An inventory management system is a useful prototype which can track live stock available in our database",
+                    "photo": "images/todo.png",
+                    "link": "#"
+                },
+                {
+                    "id": "4",
+                    "name": "Movie ticket booking system",
+                    "description": "it allows you to book available ticktet an the threather and reccommend you which ticket is mostly purchesded",
+                    "link": "https://www.hackerrank.com/certificates/iframe/8665529df152"
+                },
+                {
+                    "id": "5",
+                    "name": "dcvbm,",
+                    "description": "sddeghgfws",
+                    "link": ""
+                },
+                {
+                    "id": "6",
+                    "name": "Aditya",
+                    "description": "qasdfghjkjhgfds",
+                    "link": "https://www.hackerrank.com/certificates/iframe/8665529df152"
+                }
+            ]
         }
     ]
 }

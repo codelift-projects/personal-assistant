@@ -35,6 +35,7 @@ def login():
                 session['user'] = u["username"]
                 session['userId'] = u["id"]
                 session['name'] = u.get("name", u["username"])
+                session['email'] = u.get("email", u["username"])
                 
                 # session['Achivements'] = u.get("name", u["Achivements"])
                 for d in userdata["users"]:
