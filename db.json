@@ -1,4 +1,4 @@
-  {
+{
   "users": [
     {
       "id": "u_001",
@@ -13,8 +13,7 @@
         "dayEnd": "23:00",
         "theme": "dark"
       },
-      "createdAt": "2025-01-01T10:00:00+05:30",
-      "lastLoginAt": "2025-01-05T18:20:00+05:30"
+      "createdAt": "2025-01-01T10:00:00+05:30"
     },
     {
       "id": "u_002",
@@ -30,8 +29,7 @@
         "dayEnd": "22:00",
         "theme": "light"
       },
-      "createdAt": "2025-01-02T09:00:00+05:30",
-      "lastLoginAt": null
+      "createdAt": "2025-01-02T09:00:00+05:30"
     },
     {
       "id": "u_003",
@@ -39,6 +37,13 @@
       "email": "lu@gmail.com",
       "username": "luck",
       "password": "111"
+    },
+    {
+      "id": "u_004",
+      "name": "risabh",
+      "email": "rissabh@gmail.com",
+      "username": "ri@",
+      "password": "11"
     }
   ]
 }

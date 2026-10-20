@@ -171,6 +171,14 @@ def projects():
 
 @app.route('/profile')
 def profile():
+    with open(DB_FILE, "r") as f:
+            db = json.load(f)
+    
+    with open(USERDATA_FILE, "r") as f:
+        userdata = json.load(f)
+    
+    projects = userdata.get("projects", [])
+    totalProjects = len(projects)
     return render_template( 'profile.html')
         
 
