@@ -37,10 +37,10 @@ def login():
                 session['name'] = u.get("name", u["username"])
                 session['email'] = u.get("email", u["username"])
                 
-                # session['Achivements'] = u.get("name", u["Achivements"])
+                # session['Achievements'] = u.get("name", u["Achievements"])
                 for d in userdata["users"]:
                     if u["id"] == d['id']:
-                        session['Achivements'] = d.get("name", d["Achivements"])
+                        session['Achievements'] = d.get("name", d["Achievements"])
                         session['userdata'] = userdata
                         session['projects'] =  d["projects"]
                         
@@ -177,10 +177,30 @@ def profile():
     with open(USERDATA_FILE, "r") as f:
         userdata = json.load(f)
     
-    projects = userdata.get("projects", [])
+    user_id = session.get("user_id")
+    user = {}
+    for u in userdata["users"]:
+        if u["id"] == user_id:
+            user = u
+            break
+    projects = user.get("projcts", [])
+    goals = user.get("goals",[])
+    achievements = user.get("Achievements", [])
+    
     totalProjects = len(projects)
-    return render_template('profile.html', totalProjects=totalProjects)
-        
+    totalGoals = len(goals)
+    totalAchievements = len(achievements)
+    
+    return render_template(
+        'profile.html',
+        user=user,
+        projects=projects,
+        goals=goals,
+        achievements=achievements,
+        totalProjects=totalProjects,
+        totalGoals=totalGoals,
+        totalAchievements=totalAchievements
+    )        
 
 @app.route('/logout')
 def logout():
