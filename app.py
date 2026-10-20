@@ -179,7 +179,7 @@ def profile():
     
     projects = userdata.get("projects", [])
     totalProjects = len(projects)
-    return render_template( 'profile.html')
+    return render_template('profile.html', totalProjects=totalProjects)
         
 
 @app.route('/logout')
