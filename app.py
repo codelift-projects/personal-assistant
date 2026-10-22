@@ -203,38 +203,41 @@ def projects():
     projects = user_data.get("projects", [])
     return render_template( 'projects.html', projects=projects )
 
+
 @app.route('/profile')
 def profile():
-    with open(DB_FILE, "r") as f:
-            db = json.load(f)
-    
+    if not session.get('user'):
+        return redirect(url_for('login'))
+
     with open(USERDATA_FILE, "r") as f:
         userdata = json.load(f)
-    
-    user_id = session.get("user_id")
-    user = {}
-    for u in userdata["users"]:
-        if u["id"] == user_id:
+
+    user_id = session.get("userId")
+    user = None
+
+    for u in userdata.get("users", []):
+        if str(u.get("id")) == str(user_id):
             user = u
             break
-    projects = user.get("projcts", [])
-    goals = user.get("goals",[])
+
+    if user is None:
+        return redirect(url_for('login'))
+
+    projects = user.get("projects", [])
+    goals = user.get("goals", [])
     achievements = user.get("Achievements", [])
-    
-    totalProjects = len(projects)
-    totalGoals = len(goals)
-    totalAchievements = len(achievements)
-    
+
     return render_template(
         'profile.html',
         user=user,
         projects=projects,
         goals=goals,
         achievements=achievements,
-        totalProjects=totalProjects,
-        totalGoals=totalGoals,
-        totalAchievements=totalAchievements
-    )        
+        totalProjects=len(projects),
+        totalGoals=len(goals),
+        totalAchievements=len(achievements)
+    )
+        
 
 @app.route('/logout')
 def logout():
