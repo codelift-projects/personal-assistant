@@ -1,128 +1,249 @@
 {
-    "users": [
+  "users": [
+    {
+      "id": "u_001",
+      "goals": [
         {
-            "id": "u_001",
-            "goals": [
-                {
-                    "name": "Java basics",
-                    "progress": 70
-                },
-                {
-                    "name": "lift 150kgs deadlift",
-                    "progress": 80
-                },
-                {
-                    "name": "BGMI Ace",
-                    "progress": 99
-                }
-            ],
-            "Achievements": [
-                "Completed Python intermidiate",
-                "completed SQL basic"
-            ],
-            "projects": [
-                {
-                    "id": 1,
-                    "name": "Calculator",
-                    "photo": "images/calculator.png",
-                    "discription": "calculates every normal calculations as it is a calculator",
-                    "link": "#"
-                },
-                {
-                    "id": 2,
-                    "name": "Inventory Management System",
-                    "discription": "An inventory management system is a useful prototype which can track live stock available in our database",
-                    "photo": "images/todo.png",
-                    "link": "https://www.linkedin.com/in/prince-tiwari-428649335"
-                },
-                {
-                    "id": 3,
-                    "name": "Personal Assistant",
-                    "discription": "An inventory management system is a useful prototype which can track live stock available in our database",
-                    "photo": "images/todo.png",
-                    "link": "#"
-                },
-                {
-                    "id": "4",
-                    "name": "Movie ticket booking system",
-                    "description": "it allows you to book available ticktet an the threather and reccommend you which ticket is mostly purchesded",
-                    "link": "https://www.hackerrank.com/certificates/iframe/8665529df152"
-                },
-                {
-                    "id": "5",
-                    "name": "dcvbm,",
-                    "description": "sddeghgfws",
-                    "link": ""
-                },
-                {
-                    "id": "6",
-                    "name": "Prince",
-                    "description": "qasdfghjkjhgfds",
-                    "link": "https://www.hackerrank.com/certificates/iframe/8665529df152"
-                }
-            ]
+          "name": "Java basics",
+          "task": [
+            {
+              "name": "Introduction",
+              "description": "Learn the basics of Java programming",
+              "isCompleted": true
+            },
+            {
+              "name": "Arrays",
+              "description": "Learn arrays and how to store multiple values",
+              "isCompleted": true
+            },
+            {
+              "name": "Lists",
+              "description": "Learn ArrayList and LinkedList",
+              "isCompleted": true
+            }
+          ],
+          "isCompleted": true,
+          "duration": 55
         },
         {
-            "id": "u_002",
-            "goals": [
-                {
-                    "name": "FreeFire lover",
-                    "progress": 70
-                },
-                {
-                    "name": "become bar dancer",
-                    "progress": 80
-                },
-                {
-                    "name": "Become human",
-                    "progress": 7
-                }
-            ],
-            "Achievements": [
-                "Completed Python intermidiate",
-                "completed SQL basic"
-            ],
-            "projects": [
-                {
-                    "id": 1,
-                    "name": "Automatic Flushing System ",
-                    "photo": "images/calculator.png",
-                    "discription": "calculates every normal calculations as it is a calculator",
-                    "link": "#"
-                },
-                {
-                    "id": 2,
-                    "name": "Inventory Management System",
-                    "discription": "An inventory management system is a useful prototype which can track live stock available in our database",
-                    "photo": "images/todo.png",
-                    "link": "https://www.linkedin.com/in/prince-tiwari-428649335"
-                },
-                {
-                    "id": 3,
-                    "name": "Personal Assistant",
-                    "discription": "An inventory management system is a useful prototype which can track live stock available in our database",
-                    "photo": "images/todo.png",
-                    "link": "#"
-                },
-                {
-                    "id": "4",
-                    "name": "Movie ticket booking system",
-                    "description": "it allows you to book available ticktet an the threather and reccommend you which ticket is mostly purchesded",
-                    "link": "https://www.hackerrank.com/certificates/iframe/8665529df152"
-                },
-                {
-                    "id": "5",
-                    "name": "dcvbm,",
-                    "description": "sddeghgfws",
-                    "link": ""
-                },
-                {
-                    "id": "6",
-                    "name": "Aditya",
-                    "description": "qasdfghjkjhgfds",
-                    "link": "https://youtube.com/shorts/hJXwBG6FDPQ?si=CRS8gPXmW9SXqKKu"
-                }
-            ]
+          "name": "lift 150kgs deadlift",
+          "task": [
+            {
+              "name": "Learn technique",
+              "description": "Learn the correct deadlift form",
+              "isCompleted": true
+            },
+            {
+              "name": "Build strength",
+              "description": "Practice strength training regularly",
+              "isCompleted": false
+            },
+            {
+              "name": "Reach 150kg",
+              "description": "Gradually increase deadlift weight",
+              "isCompleted": false
+            }
+          ],
+          "isCompleted": false,
+          "duration": 180
+        },
+        {
+          "name": "BGMI Ace",
+          "task": [
+            {
+              "name": "Improve aim",
+              "description": "Practice aiming and recoil control",
+              "isCompleted": true
+            },
+            {
+              "name": "Improve gameplay",
+              "description": "Practice movement and map awareness",
+              "isCompleted": true
+            },
+            {
+              "name": "Reach Ace",
+              "description": "Play ranked matches to reach Ace tier",
+              "isCompleted": false
+            }
+          ],
+          "isCompleted": false,
+          "duration": 60
         }
-    ]
+      ],
+      "Achievements": [
+        "Completed Python intermidiate",
+        "completed SQL basic"
+      ],
+      "projects": [
+        {
+          "id": 1,
+          "name": "Calculator",
+          "photo": "images/calculator.png",
+          "discription": "calculates every normal calculations as it is a calculator",
+          "link": "#"
+        },
+        {
+          "id": 2,
+          "name": "Inventory Management System",
+          "discription": "An inventory management system is a useful prototype which can track live stock available in our database",
+          "photo": "images/todo.png",
+          "link": "https://www.linkedin.com/in/prince-tiwari-428649335"
+        },
+        {
+          "id": 3,
+          "name": "Personal Assistant",
+          "discription": "An inventory management system is a useful prototype which can track live stock available in our database",
+          "photo": "images/todo.png",
+          "link": "#"
+        },
+        {
+          "id": "4",
+          "name": "Movie ticket booking system",
+          "description": "it allows you to book available ticktet an the threather and reccommend you which ticket is mostly purchesded",
+          "link": "https://www.hackerrank.com/certificates/iframe/8665529df152"
+        },
+        {
+          "id": "5",
+          "name": "dcvbm,",
+          "description": "sddeghgfws",
+          "link": ""
+        },
+        {
+          "id": "6",
+          "name": "Prince",
+          "description": "qasdfghjkjhgfds",
+          "link": "https://www.hackerrank.com/certificates/iframe/8665529df152"
+        }
+      ]
+    },
+    {
+      "id": "u_002",
+      "goals": [
+        {
+          "name": "FreeFire lover",
+          "task": [
+            {
+              "name": "Improve aim",
+              "description": "Practice aiming at targets",
+              "isCompleted": true
+            },
+            {
+              "name": "Learn characters",
+              "description": "Understand character skills",
+              "isCompleted": false
+            },
+            {
+              "name": "Reach target rank",
+              "description": "Play ranked matches regularly",
+              "isCompleted": false
+            }
+          ],
+          "isCompleted": false,
+          "duration": 60
+        },
+        {
+          "name": "become bar dancer",
+          "task": [
+            {
+              "name": "Learn basic steps",
+              "description": "Practice simple dance movements",
+              "isCompleted": true
+            },
+            {
+              "name": "Practice rhythm",
+              "description": "Learn to dance with music beats",
+              "isCompleted": false
+            },
+            {
+              "name": "Learn a routine",
+              "description": "Practice a complete dance routine",
+              "isCompleted": false
+            }
+          ],
+          "isCompleted": false,
+          "duration": 90
+        },
+        {
+          "name": "Become human",
+          "task": [
+            {
+              "name": "Be kind",
+              "description": "Treat other people with kindness",
+              "isCompleted": true
+            },
+            {
+              "name": "Help others",
+              "description": "Help people whenever possible",
+              "isCompleted": false
+            },
+            {
+              "name": "Build good habits",
+              "description": "Practice honesty and responsibility",
+              "isCompleted": false
+            }
+          ],
+          "isCompleted": false,
+          "duration": 90
+        }
+      ],
+      "Achievements": [
+        "Completed Python intermidiate",
+        "completed SQL basic"
+      ],
+      "projects": [
+        {
+          "id": 1,
+          "name": "Automatic Flushing System ",
+          "photo": "images/calculator.png",
+          "discription": "calculates every normal calculations as it is a calculator",
+          "link": "#"
+        },
+        {
+          "id": 2,
+          "name": "Inventory Management System",
+          "discription": "An inventory management system is a useful prototype which can track live stock available in our database",
+          "photo": "images/todo.png",
+          "link": "https://www.linkedin.com/in/prince-tiwari-428649335"
+        },
+        {
+          "id": 3,
+          "name": "Personal Assistant",
+          "discription": "An inventory management system is a useful prototype which can track live stock available in our database",
+          "photo": "images/todo.png",
+          "link": "#"
+        },
+        {
+          "id": "4",
+          "name": "Movie ticket booking system",
+          "description": "it allows you to book available ticktet an the threather and reccommend you which ticket is mostly purchesded",
+          "link": "https://www.hackerrank.com/certificates/iframe/8665529df152"
+        },
+        {
+          "id": "5",
+          "name": "dcvbm,",
+          "description": "sddeghgfws",
+          "link": ""
+        },
+        {
+          "id": "6",
+          "name": "Aditya",
+          "description": "qasdfghjkjhgfds",
+          "link": "https://youtube.com/shorts/hJXwBG6FDPQ?si=CRS8gPXmW9SXqKKu"
+        }
+      ]
+    },
+    {
+      "id": "u_005",
+      "goals": [],
+      "Achievements": [],
+      "projects": [
+        {
+          "id": "1",
+          "name": "rdbms",
+          "description": "RELATIONAL DATABASE MANAGEMENT SYSTEM",
+          "link": ""
+        }
+      ]
+    }
+  ]
 }

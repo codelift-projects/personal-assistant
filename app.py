@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from pathlib import Path
 import json
+from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = 'encryptionKey'
@@ -19,6 +21,26 @@ def home():
         userdata = json.load(g)
     return render_template('home.html')
 
+def progress():
+    with open(DB_FILE, "r") as f:
+            db = json.load(f)
+    with open(USERDATA_FILE, "r") as g:
+        userdata = json.load(g)
+    
+    for u in userdata["users"]:
+        o = session.get('userId')
+        glist =[]
+        if u['id'] == o:
+            completedTask = 0
+            for g in u["goals"][0]:
+                for t in g["task"]:
+                    if t["isCompleted"] == True:
+                        completedTask +=1
+                totalTask = len(u["goals"][0]["task"])
+                glist.append((completedTask/totalTask)*100)
+    return glist
+            
+            
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -37,19 +59,12 @@ def login():
                 session['name'] = u.get("name", u["username"])
                 session['email'] = u.get("email", u["username"])
                 
-                # session['Achievements'] = u.get("name", u["Achievements"])
-                for d in userdata["users"]:
-                    if u["id"] == d['id']:
-                        session['Achievements'] = d.get("name", d["Achievements"])
-                        session['userdata'] = userdata
-                        session['projects'] =  d["projects"]
-                        
-                
                 return redirect(url_for('dashboard'))
             
         return redirect(url_for('login'))
 
     return render_template('login.html')
+
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -67,28 +82,47 @@ def signup():
         with open(DB_FILE, "r") as f:
             db = json.load(f)
 
+        with open(USERDATA_FILE, "r") as f:
+            userdata = json.load(f)
+
         for u in db["users"]:
             if u["username"].lower() == username.lower():
                 flash("Username already taken")
                 return redirect(url_for('signup'))
 
+        user_id = "u_" + str(len(db["users"]) + 1).zfill(3)
+
         new_user = {
-            "id": "u_" + str(len(db["users"]) + 1).zfill(3),
+            "id": user_id,
             "name": name,
             "email": email,
             "username": username,
-            "password": password
+            "password": password,
+            "role": "user",
+            "status": "active",
+            "createdAt": datetime.now().astimezone().isoformat(timespec="seconds")
         }
+
+        new_user_data = {
+            "id": user_id,
+            "goals": [],
+            "Achievements": [],
+            "projects": []
+        }
+
         db["users"].append(new_user)
+        userdata["users"].append(new_user_data)
 
         with open(DB_FILE, "w") as f:
-            json.dump(db, f, indent=2)
+            json.dump(db, f, indent=4)
+
+        with open(USERDATA_FILE, "w") as f:
+            json.dump(userdata, f, indent=4)
 
         flash("Account created. Please login.")
         return redirect(url_for('login'))
 
     return render_template('signup.html')
-
 
 
 @app.route('/dashboard')
@@ -97,20 +131,20 @@ def dashboard():
         return redirect(url_for('login'))
 
     with open(USERDATA_FILE, "r") as g:
-        all_userdata = json.load(g)
+        userdata = json.load(g)
 
     user_data = {"goals": []}
-
-    for u in all_userdata["users"]:
+    ok = progress()
+    for u in userdata["users"]:
         if u["id"] == session.get("userId"):
             user_data = u
+            data = {
+                    'name': session.get('name', session.get('user')),
+                    'Achievements':u["Achievements"],
+                    'progress': u["goals"][0]["task"]
+                }
             break
-
-    data = {
-        'name': session.get('name', session.get('user')),
-        'achivement': session.get('achivement', session.get('user'))
-    }
-
+       
     return render_template(
         'dashboard.html',
         user=data,

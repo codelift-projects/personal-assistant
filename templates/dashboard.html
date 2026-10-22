@@ -166,7 +166,7 @@
         <li><a href="#" class="nav-link ">Goals</a></li>
         <li><a href="/projects" class="nav-link  ">Completed Goals</a></li>
         <li><a href="#" class="nav-link ">Tasks</a></li>
-        <li><a href="/pofile" class="nav-link ">Profile</a></li>
+        <li><a href="/profile" class="nav-link ">Profile</a></li>
 
           <li class="nav-item ">
             <a href="/logout" class="nev-link  btn btn-outline-danger mt-3" >Logout</a>
@@ -198,17 +198,16 @@
         new Chart(ctx2, {
           type: 'polarArea',
           data: {
-        
             labels: [
-              {% for goal in userdata["goals"] %}
-                {{ goal["name"] | tojson }}{% if not loop.last %},{% endif %}
+              {% for goals in userdata["goals"] %}
+                {{ goals["name"] | tojson }}{% if not loop.last %},{% endif %}
               {% endfor %}
             ],
-            datasets: [{
+            data  sets: [{
               label: 'Goal Progress (%)',
               data: [
-                {% for goal in userdata["goals"] %}
-                  {{ goal["progress"] }}{% if not loop.last %},{% endif %}
+                {% for goals in userdata["goals"] %}
+                  {{ goals["progress"] }}{% if not loop.last %},{% endif %}
                 {% endfor %}
               ],
               borderWidth: 1,
@@ -221,17 +220,7 @@
 
 
           
-  <!--
-   <div >
-    <h2>Welcome, {{user.name}}</h2>
-    <p class="text-muted">User ID: {{ user.achivement }}</p>
-    <p>{{session.get('userdata', '-')}} helooooo</p>
-    <p>This is the Dashboard</p>
-    <a href="/logout" class="btn btn-outline-danger mt-3">Logout</a>
-    <p class="text-muted">Achievements: {{ session.get('Achievements', '-') }}</p>
-    <p class="text-muted">projects: {{ session.get('projects', '-') }}</p>
-  </div>
-   -->
+
 
 
 </body>
