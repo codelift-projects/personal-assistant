@@ -179,49 +179,75 @@
 </div>
 
 
-   
-    <div>
-      <section class="card m-5 bg-info" style="max-width: 320px">
-      <canvas id="myChart2"></canvas>
-        <div class="card-body">
-          <h4 class="card-title">Progress</h4>
-          <p class="card-text">Complition of each task track your progress</p>
-        </div>
-      </section>
 
-      </div>
+<section class="card m-5 p-3" style="max-width: 400px;">
+    <div class="card-body">
+        <h4 class="card-title">Goal Progress</h4>
+        <p class="card-text">Track your completion percentage for each goal.</p>
+        <canvas id="myChart2"></canvas>
+    </div>
+</section>
 
-      </div>
-      <script>
-        const ctx2 = document.getElementById('myChart2');
-        const sal1 =  document.getElementById('age');
-        new Chart(ctx2, {
-          type: 'polarArea',
-          data: {
-            labels: [
-              {% for goals in userdata["goals"] %}
-                {{ goals["name"] | tojson }}{% if not loop.last %},{% endif %}
-              {% endfor %}
-            ],
-            data  sets: [{
-              label: 'Goal Progress (%)',
-              data: [
-                {% for goals in userdata["goals"] %}
-                  {{ goals["progress"] }}{% if not loop.last %},{% endif %}
-                {% endfor %}
-              ],
-              borderWidth: 1,
-              backgroundColor: ['red','orange', 'white'],
-            borderColor: ['white','pink', 'green'],
+<script>
+    const labels = [
+        {% for goal in user.goal_progress %}
+            {{ goal.name | tojson }}{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ];
+
+    const progressData = [
+        {% for goal in user.goal_progress %}
+            {{ goal.percentage }}{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ];
+
+    new Chart(document.getElementById('myChart2'), {
+        type: 'polarArea',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Goal Progress (%)',
+                data: progressData,
+                backgroundColor: [
+                    'rgba(0, 229, 255, 0.7)',
+                    'rgba(139, 92, 246, 0.7)',
+                    'rgba(0, 200, 140, 0.7)',
+                    'rgba(255, 159, 64, 0.7)',
+                    'rgba(255, 83, 112, 0.7)'
+                ],
+                borderColor: '#e6f1ff',
+                borderWidth: 1
             }]
-          }
-        });
-      </script>
-
-
-          
-
-
-
-</body>
-</html>
+        },
+        options: {
+            responsive: true,
+            scales: {
+                r: {
+                    min: 0,
+                    max: 100,
+                    ticks: {
+                        color: '#e6f1ff',
+                        backdropColor: 'transparent'
+                    },
+                    grid: {
+                        color: '#1d3048'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#e6f1ff'
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.raw + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>

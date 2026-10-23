@@ -21,24 +21,37 @@ def home():
         userdata = json.load(g)
     return render_template('home.html')
 
+
 def progress():
-    with open(DB_FILE, "r") as f:
-            db = json.load(f)
-    with open(USERDATA_FILE, "r") as g:
-        userdata = json.load(g)
-    
-    for u in userdata["users"]:
-        o = session.get('userId')
-        glist =[]
-        if u['id'] == o:
-            completedTask = 0
-            for g in u["goals"][0]:
-                for t in g["task"]:
-                    if t["isCompleted"] == True:
-                        completedTask +=1
-                totalTask = len(u["goals"][0]["task"])
-                glist.append((completedTask/totalTask)*100)
-    return glist
+    with open(USERDATA_FILE, "r") as f:
+        userdata = json.load(f)
+
+    user_id = session.get("userId")
+
+    for user in userdata.get("users", []):
+        if str(user.get("id")) == str(user_id):
+            goal_progress = []
+
+            for goal in user.get("goals", []):
+                tasks = goal.get("task", [])
+                total_tasks = len(tasks)
+                completed_tasks = sum(
+                    1 for task in tasks
+                    if task.get("isCompleted", False)
+                )
+                percentage = (
+                    (completed_tasks / total_tasks) * 100
+                    if total_tasks else 0
+                )
+                goal_progress.append({
+                    "name": goal.get("name", "Untitled Goal"),
+                    "completedTask": completed_tasks,
+                    "totalTask": total_tasks,
+                    "percentage": round(percentage, 2)
+                })
+            return goal_progress
+    return []
+
             
             
 @app.route('/login', methods=['GET', 'POST'])
@@ -125,31 +138,44 @@ def signup():
     return render_template('signup.html')
 
 
+
 @app.route('/dashboard')
 def dashboard():
     if not session.get('user'):
         return redirect(url_for('login'))
 
-    with open(USERDATA_FILE, "r") as g:
-        userdata = json.load(g)
+    with open(USERDATA_FILE, "r") as f:
+        userdata = json.load(f)
 
-    user_data = {"goals": []}
-    ok = progress()
-    for u in userdata["users"]:
-        if u["id"] == session.get("userId"):
+    user_data = None
+
+    for u in userdata.get("users", []):
+        if str(u.get("id")) == str(session.get("userId")):
             user_data = u
-            data = {
-                    'name': session.get('name', session.get('user')),
-                    'Achievements':u["Achievements"],
-                    'progress': u["goals"][0]["task"]
-                }
             break
-       
+
+    if user_data is None:
+        return redirect(url_for('login'))
+
+    all_tasks = [
+        task
+        for goal in user_data.get("goals", [])
+        for task in goal.get("task", [])
+    ]
+
+    data = {
+        "name": session.get("name", session.get("user")),
+        "Achievements": user_data.get("Achievements", []),
+        "progress": all_tasks,
+        "goal_progress": progress()
+    }
+
     return render_template(
-        'dashboard.html',
+        "dashboard.html",
         user=data,
         userdata=user_data
     )
+
 
 @app.route('/projects', methods=['GET', 'POST'])
 def projects():
