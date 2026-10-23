@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #e0e7ff, #f0fdfa);
+            color: #1e293b;
+        }
+
+        .box {
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            background: white;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px #00000015;
+        }
+
+        h1 {
+            margin: 0 0 15px;
+        }
+
+        p {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 14px 30px;
+            background: #4f46e5;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #4338ca;
+        }
+
+        .button:focus-visible {
+            outline: 3px solid #4f46e5;
+            outline-offset: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="box">
+        <h1>Welcome!</h1>
+        <p>Access your dashboard, view your profile, and check your tasks.</p>
+
+        <a href="/login" class="button">
+           Go to Login
+            
+        </a>
+    </main> 
+</body>
+</html>
