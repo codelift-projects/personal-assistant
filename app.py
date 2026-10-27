@@ -263,7 +263,42 @@ def profile():
         totalGoals=len(goals),
         totalAchievements=len(achievements)
     )
-        
+     
+
+@app.route("/goals")
+def goals():
+
+    with open("userdata.json", "r") as file:
+        userdata = json.load(file)
+
+    user_id = session.get("user_id", "u_001")
+
+    user_data = {}
+
+    for user in userdata["users"]:
+        if user["id"] == user_id:
+            user_data = user
+            break
+
+    goals = user_data.get("goals", [])
+
+    total_goals = len(goals)
+    completed_goals = 0
+    active_goals = 0
+
+    for goal in goals:
+        if goal.get("status") == "Completed":
+            completed_goals += 1
+        else:
+            active_goals += 1
+
+    return render_template(
+        "goals.html",
+        goals=goals,
+        total_goals=total_goals,
+        completed_goals=completed_goals,
+        active_goals=active_goals
+    )
 
 @app.route('/logout')
 def logout():
