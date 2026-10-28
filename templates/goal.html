@@ -1,16 +1,175 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>goals</title>
-    <h3>This is goal Page</h3>
-    <button>Create Goal</button>
-    <button>+</button>
-    <form method="POST" ></form>
-    <h1>{{goals}}</h1>
+    <title>My Goals</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f4f7fb;
+            font-family: Arial, sans-serif;
+        }
+
+        .main-container {
+            max-width: 900px;
+            margin: 50px auto;
+        }
+
+        .goal-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .goal-item {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 15px;
+        }
+
+        .goal-title {
+            font-weight: bold;
+            font-size: 18px;
+            color: #212529;
+        }
+
+        .goal-description {
+            color: #6c757d;
+            margin-top: 8px;
+            white-space: pre-wrap;
+        }
+
+        .btn-primary {
+            background-color: #2563eb;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+    </style>
 </head>
+
 <body>
-    
+
+<div class="container main-container">
+
+    <!-- Page Heading -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold">My Goals</h2>
+            <p class="text-secondary mb-0">
+                Set your goals and work towards achieving them.
+            </p>
+        </div>
+
+        <a href="{{ url_for('dashboard') }}"
+           class="btn btn-outline-secondary">
+            Dashboard
+        </a>
+    </div>
+
+    <!-- Add Goal Form -->
+    <div class="goal-card">
+        <h5 class="fw-bold mb-3">Add New Goal</h5>
+
+        <form action="{{ url_for('goal') }}" method="POST">
+
+            <div class="mb-3">
+                <label for="title" class="form-label">
+                    Goal Title
+                </label>
+
+                <input type="text"
+                       class="form-control"
+                       id="title"
+                       name="title"
+                       placeholder="e.g. Learn Python"
+                       maxlength="150"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">
+                    Description
+                </label>
+
+                <textarea class="form-control"
+                          id="description"
+                          name="description"
+                          rows="3"
+                          placeholder="Describe your goal..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary px-4">
+                + Add Goal
+            </button>
+
+        </form>
+    </div>
+
+    <!-- Goals List -->
+    <div class="mb-3">
+        <h4 class="fw-bold">Your Goals</h4>
+    </div>
+
+    {% if goals %}
+
+        {% for goal in goals %}
+        <div class="goal-item">
+
+            <div class="d-flex justify-content-between
+                        align-items-start gap-3">
+
+                <div>
+                    <div class="goal-title">
+                        {{ goal.title if goal.title is defined
+                           else goal.get('title', 'Untitled Goal') }}
+                    </div>
+
+                    <div class="goal-description">
+                        {{ goal.get('description', 'No description provided.') }}
+                    </div>
+                </div>
+
+                <form action="{{ url_for('delete_goal',
+                                         index=loop.index0) }}"
+                      method="POST"
+                      onsubmit="return confirm('Are you sure you want to delete this goal?');">
+
+                    <button type="submit"
+                            class="btn btn-outline-danger btn-sm">
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+    {% else %}
+
+        <div class="goal-card text-center">
+            <h5>No goals added yet!</h5>
+            <p class="text-secondary mb-0">
+                Add your first goal using the form above.
+            </p>
+        </div>
+
+    {% endif %}
+
+</div>
+
 </body>
 </html>

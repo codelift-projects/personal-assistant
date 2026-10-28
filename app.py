@@ -159,28 +159,144 @@ def home():
 #Goal
 @app.route('/goal', methods=["GET", "POST"])
 def goal():
-    goal =[]
     userid = session.get('user_id')
+
     with open('data.json', 'r') as f:
         users_data = json.load(f)
+
+    current_user = None
     for user in users_data["users"]:
-        if(user["user_id"] == userid):
-            goal = user["goals"]
+        if user["user_id"] == userid:
+            current_user = user
             break
-    return render_template('goal.html',goals = goal)
-#task manage
-@app.route('/task',methods=["GET","POST"])
-def task():
-    task=[]
-    users_data = {"users":[]}
+
+    if current_user is None:
+        return redirect(url_for('login'))
+
+    if "goals" not in current_user:
+        current_user["goals"] = []
+
+    if request.method == "POST":
+        title = request.form.get("title", "").strip()
+        description = request.form.get("description", "").strip()
+        if title:
+            current_user["goals"].append({
+                "title": title,
+                "description": description
+            })
+            with open('data.json', 'w') as f:
+                json.dump(users_data, f, indent=4)
+        return redirect(url_for('goal'))
+
+    return render_template('goal.html', goals=current_user["goals"])
+
+
+@app.route('/goal/delete/<int:index>', methods=["POST"])
+def delete_goal(index):
     userid = session.get('user_id')
-    with open('data.json','r') as f:
-        usr_data = json.load(f)
-    for task in users_data["users"]:
-        if(task["user_id"]== userid):
-            tasks=user["daily_tasks"]
+
+    with open('data.json', 'r') as f:
+        users_data = json.load(f)
+
+    current_user = None
+    for user in users_data["users"]:
+        if user["user_id"] == userid:
+            current_user = user
             break
-    return render_template('home.html',daily_tasks=tasks)    
-                
+
+    if current_user is None:
+        return redirect(url_for('login'))
+
+    goals = current_user.get("goals", [])
+    if 0 <= index < len(goals):
+        goals.pop(index)
+        with open('data.json', 'w') as f:
+            json.dump(users_data, f, indent=4)
+
+    return redirect(url_for('goal'))
+#task manage
+@app.route('/task', methods=["GET", "POST"])
+def task():
+    userid = session.get('user_id')
+
+    with open('data.json', 'r') as f:
+        users_data = json.load(f)
+
+    current_user = None
+    for user in users_data["users"]:
+        if user["user_id"] == userid:
+            current_user = user
+            break
+
+    if current_user is None:
+        return redirect(url_for('login'))
+
+    if "daily_tasks" not in current_user:
+        current_user["daily_tasks"] = []
+
+    if request.method == "POST":
+        task_name = request.form.get("task_name", "").strip()
+        if task_name:
+            current_user["daily_tasks"].append({
+                "name": task_name,
+                "done": False
+            })
+            with open('data.json', 'w') as f:
+                json.dump(users_data, f, indent=4)
+        return redirect(url_for('task'))
+
+    return render_template('Daily task.html', daily_tasks=current_user["daily_tasks"])
+
+
+@app.route('/task/toggle/<int:index>', methods=["POST"])
+def toggle_task(index):
+    userid = session.get('user_id')
+
+    with open('data.json', 'r') as f:
+        users_data = json.load(f)
+
+    current_user = None
+    for user in users_data["users"]:
+        if user["user_id"] == userid:
+            current_user = user
+            break
+
+    if current_user is None:
+        return redirect(url_for('login'))
+
+    tasks = current_user.get("daily_tasks", [])
+    if 0 <= index < len(tasks):
+        tasks[index]["done"] = not tasks[index]["done"]
+        with open('data.json', 'w') as f:
+            json.dump(users_data, f, indent=4)
+
+    return redirect(url_for('task'))
+
+
+@app.route('/task/delete/<int:index>', methods=["POST"])
+def delete_task(index):
+    userid = session.get('user_id')
+
+    with open('data.json', 'r') as f:
+        users_data = json.load(f)
+
+    current_user = None
+    for user in users_data["users"]:
+        if user["user_id"] == userid:
+            current_user = user
+            break
+
+    if current_user is None:
+        return redirect(url_for('login'))
+
+    tasks = current_user.get("daily_tasks", [])
+    if 0 <= index < len(tasks):
+        tasks.pop(index)
+        with open('data.json', 'w') as f:
+            json.dump(users_data, f, indent=4)
+
+    return redirect(url_for('task'))
+
+
 if __name__ == '__main__':
     app.run(debug=True)
