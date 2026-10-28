@@ -204,6 +204,48 @@
     }
 
     </style>
+
+    <script>
+    document.querySelectorAll(".card").forEach(function(card) {
+
+        const checkboxes = card.querySelectorAll(".task-checkbox");
+        const progressBar = card.querySelector(".task-progress-bar");
+        const progressText = card.querySelector(".task-progress-text");
+
+        if (!progressBar || !progressText) {
+            return;
+        }
+
+        function updateProgress() {
+
+            let completed = 0;
+
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    completed++;
+                }
+            });
+
+            let progress = 0;
+
+            if (checkboxes.length > 0) {
+                progress = Math.round(
+                    (completed / checkboxes.length) * 100
+                );
+            }
+
+            progressBar.style.width = progress + "%";
+            progressText.textContent = progress + "%";
+        }
+
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener("change", updateProgress);
+        });
+
+        updateProgress();
+    });
+</script>
+
 </head>
 
 <body class="nexquest-theme">
@@ -236,4 +278,62 @@
   </div>
 </nav>
 </div>
+{% for goal in goals %}
+<div class="col-12 col-md-6 col-xl-4">
+    <div class="card p-3 h-100">
+
+        <div class="d-flex justify-content-between align-items-center">
+           <h5>{{ goal.get('name', 'Untitled Goal') }}</h5> 
+            
+
+           <button class="btn btn-outline-info btn-sm"
+            data-bs-toggle="collapse"
+            data-bs-target="#tasks-{{ loop.index }}">
+              View Tasks
+          </button>
+            </button>
+        </div>
+
+        <div class="mt-2">
+            <div class="d-flex justify-content-between">
+                <small>Task Progress</small>
+                <small class="task-progress-text">0%</small>
+            </div>
+
+            <div class="progress mt-2">
+                <div class="progress-bar bg-info task-progress-bar"
+                     style="width: 0%">
+                </div>
+            </div>
+        </div>
+
+        <div class="collapse mt-3" 
+
+            <hr>
+
+            <h6>Tasks</h6>
+
+            {% for task in goal.get('tasks', []) %}
+
+            <div class="form-check mb-2">
+                <input class="form-check-input task-checkbox"
+                       type="checkbox"
+                       {% if task.get('isCompleted', false) %}checked{% endif %}>
+
+                <label class="form-check-label">
+                    {{ task.get('name', 'Unnamed Task') }}
+                </label>
+            </div>
+
+            {% else %}
+
+            <p class="text-secondary small">No tasks added yet.</p>
+
+            {% endfor %}
+        </div>
+
+    </div>
+
+</div>
+{% endfor %}
 </body>

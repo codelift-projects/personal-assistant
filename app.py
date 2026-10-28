@@ -268,10 +268,10 @@ def profile():
 @app.route("/goals")
 def goals():
 
-    with open("userdata.json", "r") as file:
-        userdata = json.load(file)
+    with open(USERDATA_FILE, "r") as f:
+        userdata = json.load(f)
 
-    user_id = session.get("user_id", "u_001")
+    user_id = session.get("userId")
 
     user_data = {}
 
