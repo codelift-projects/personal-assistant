@@ -287,10 +287,28 @@ def goals():
     active_goals = 0
 
     for goal in goals:
-        if goal.get("status") == "Completed":
+        if goal.get("isCompleted") == True:
             completed_goals += 1
         else:
             active_goals += 1
+
+        total = len(goal["task"])
+        completed = 0
+
+        for task in goal["task"]:
+            if task["isCompleted"]:
+                completed += 1
+
+        if total > 0:
+            goal["progress"] = int(completed / total * 100)
+        else:
+            goal["progress"] = 0
+
+        goal["next_tasks"] = []
+
+        for task in goal["task"]:
+            if not task["isCompleted"]:
+                goal["next_tasks"].append(task)
 
     return render_template(
         "goals.html",

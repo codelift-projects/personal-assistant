@@ -68,6 +68,38 @@
                     ],
                     "isCompleted": false,
                     "duration": 60
+                },
+                {
+                    "name": "Improve Daily Routine",
+                    "task": [
+                        {
+                            "name": "Wake up at 7 AM",
+                            "description": "Wake up early every morning",
+                            "isCompleted": false
+                        },
+                        {
+                            "name": "Exercise",
+                            "description": "Exercise for 20 minutes daily",
+                            "isCompleted": false
+                        },
+                        {
+                            "name": "Study",
+                            "description": "Study for at least 2 hours",
+                            "isCompleted": false
+                        },
+                        {
+                            "name": "Read a Book",
+                            "description": "Read for 15 minutes",
+                            "isCompleted": false
+                        },
+                        {
+                            "name": "Sleep on Time",
+                            "description": "Sleep before 11 PM",
+                            "isCompleted": false
+                        }
+                    ],
+                    "isCompleted": false,
+                    "duration": 30
                 }
             ],
             "Achievements": [
