@@ -315,7 +315,8 @@ def goals():
         goals=goals,
         total_goals=total_goals,
         completed_goals=completed_goals,
-        active_goals=active_goals
+        active_goals=active_goals,
+        task = task 
     )
 
 @app.route('/logout')
