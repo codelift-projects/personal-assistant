@@ -186,6 +186,43 @@
     .card canvas {
       padding: 10px;
     }
+    .profile-box{
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    .profile-section{
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+    profile-img{
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+    }
+    .info-label {
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+    .info-value{
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+    .profile-number{
+      color: var(--accent);
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .profile-tag {
+      display: inline-block;
+      background: #14243a;
+      color: var(--accent);
+      padding: 7px 12px;
+      border-radius: 20px;
+      margin: 4px;
+    }
 
     </style>
 </head>
@@ -233,9 +270,9 @@
 
         <div class="flex-grow-1">
             <h4 class="mb-1">{{session.get("name")}}</h4>
-            <p class="text-secondary mb-2">CSE (AI) Student</p>
+            <p class="text-secondary mb-2">{{role}}</p>
 
-            <span class="badge bg-primary">Developer</span>
+            <span class="profile-tag">NexQuest {{role}}</span>
         </div>
 
         <button class="btn btn-outline-primary btn-sm">
@@ -245,49 +282,52 @@
     </div>
 </div><br>
 
-
-<div class="row g-3">
-
-    <div class="col-md-4">
-        <div class="card shadow-sm border-0 rounded-4 p-3">
-            <h3>05</h3>
-            <p class="text-secondary mb-0">Active Goals</p>
-        </div>
+<div class="row g-3 mb-3">
+  <div class="col-md-3 col-6">
+    <div class="card p-3">
+      <div class="profile-number">{{ totalGoals }}</div>
+      <p>Total Goals</p>
     </div>
-
-    <div class="col-md-4">
-        <div class="card shadow-sm border-0 rounded-4 p-3">
-            <h3>{{"totalProject"}}</h3>
-            <p class="text-secondary mb-0">Projects</p>
-        </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card p-3">
+      <div class="profile-number">{{ completedGoal }}</div>
+      <p>Completed  Goals</p>
     </div>
-
-    <div class="col-md-4">
-        <div class="card shadow-sm border-0 rounded-4 p-3">
-            <h3>08</h3>
-            <p class="text-secondary mb-0">Achievements</p>
-        </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card p-3">
+      <div class="profile-number">{{ totalProject }}</div>
+      <p>Projects </p>
     </div>
-
+  </div>
 </div>
 
+<div class="card profile-section">
 
-<div class="card shadow-sm border-0 rounded-4 p-3">
-    <div class="d-flex align-items-center gap-3">
-
-        <div class="flex-grow-1">
-            <h4 class="mb-1">Personal Information</h4>
-            <h5 class=" mb-2">Email Address</h5>
-            <p class="text-secondary mb-2">{{session.get('email')}}</p>
-            <h5 class=" mb-2">Education</h5>
-            <h5 class=" mb-2">Joined at</h5>
-
-            <span class="badge bg-primary"></span>s
-        </div>
-
+  <h4> Personal Information</h4>
+  <div class = "row">
+    <div class="col-md-6">
+      <p class="info-label">Full Name</p>
+      <p class="info-value"> {{session.get('name')}}</p>
     </div>
-</div>
+    <div class="col-md-6">
+      <p class="info-label"> Email</p>
+      <p class="info-value">{{ session.get('email') }}</p>
+    </div>
+    <div class="col-md-6">
+      <p class="info-label"> Username</p>
+      <p class="info-value">{{ username }}</p>
+    </div>
+    <div class="col-md-6">
+      <p class="info-label"> joined date</p>
+      <p class="info-value">{{ joinedAt }}</p>
+    </div>
 
+  </div>
+  
+
+</div>
 
 
 </body>

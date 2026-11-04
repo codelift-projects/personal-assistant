@@ -232,46 +232,58 @@ def projects():
 
 @app.route('/profile')
 def profile():
+
     if not session.get('user'):
         return redirect(url_for('login'))
 
     with open(USERDATA_FILE, "r") as f:
         userdata = json.load(f)
-        
-    with open(DB_FILE, "r") as g:
-        db = json.load(g)
-
+    with open(DB_FILE, "r") as f:
+        db = json.load(f)
     user_id = session.get("userId")
-    user = None
-    for g in db.get("users", []):
-        if str(g.get("id")) == str(user_id):
-            userInfo = g
-            break
-            
 
-    for u in userdata.get("users", []):
-        if str(u.get("id")) == str(user_id):
-            user = u
-            break
+    userInfo = None
+    user_data = None
 
-    if user is None:
+    for u in db["users"]:
+        if u["id"] == user_id:
+            userInfo = u
+
+    for u in userdata["users"]:
+        if u["id"] == user_id:
+            user_data = u
+
+    if userInfo is None or user_data is None:
         return redirect(url_for('login'))
 
-    projects = user.get("projects", [])
-    goals = user.get("goals", [])
-    achievements = user.get("Achievements", [])
-    role = userInfo.get("role", [])
+    goals = user_data.get("goals", [])
+    projects = user_data.get("projects", [])
+    achievements = user_data.get("Achievements", [])
+    totalGoals = len(goals)
+    completedGoals = 0
+    activeGoals = 0
+    date = userInfo.get("createdAt")
+    joinedAt = datetime.fromisoformat(date).strftime("%d %B %Y")
+    role = userInfo.get("role")
+
+    for goal in goals:
+        if goal.get("isCompleted", False):
+            completedGoals += 1
+        else:
+            activeGoals += 1
+
+    totalProject = len(projects)
 
     return render_template(
         'profile.html',
-        user=user,
-        projects=projects,
-        goals=goals,
-        achievements=achievements,
-        totalProjects=len(projects),
-        totalGoals=len(goals),
+        user_data=user_data,
+        username=userInfo.get("username"),
+        joinedAt= joinedAt,
+        totalGoals=totalGoals,
+        completedGoals=completedGoals,
+        activeGoals=activeGoals,
+        totalProject=totalProject,
         totalAchievements=len(achievements),
-        user_data = userdata,
         role = role
     )
      
@@ -309,14 +321,11 @@ def goals():
         for task in goal["task"]:
             if task["isCompleted"]:
                 completed += 1
-
         if total > 0:
             goal["progress"] = int(completed / total * 100)
         else:
             goal["progress"] = 0
-
         goal["next_tasks"] = []
-
         for task in goal["task"]:
             if not task["isCompleted"]:
                 goal["next_tasks"].append(task)
