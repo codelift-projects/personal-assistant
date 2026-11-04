@@ -237,9 +237,17 @@ def profile():
 
     with open(USERDATA_FILE, "r") as f:
         userdata = json.load(f)
+        
+    with open(DB_FILE, "r") as g:
+        db = json.load(g)
 
     user_id = session.get("userId")
     user = None
+    for g in db.get("users", []):
+        if str(g.get("id")) == str(user_id):
+            userInfo = g
+            break
+            
 
     for u in userdata.get("users", []):
         if str(u.get("id")) == str(user_id):
@@ -252,6 +260,7 @@ def profile():
     projects = user.get("projects", [])
     goals = user.get("goals", [])
     achievements = user.get("Achievements", [])
+    role = userInfo.get("role", [])
 
     return render_template(
         'profile.html',
@@ -261,7 +270,9 @@ def profile():
         achievements=achievements,
         totalProjects=len(projects),
         totalGoals=len(goals),
-        totalAchievements=len(achievements)
+        totalAchievements=len(achievements),
+        user_data = userdata,
+        role = role
     )
      
 
@@ -316,7 +327,8 @@ def goals():
         total_goals=total_goals,
         completed_goals=completed_goals,
         active_goals=active_goals,
-        task = task 
+        task = task
+        
     )
 
 @app.route('/logout')
