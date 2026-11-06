@@ -4,6 +4,7 @@
             "id": "u_001",
             "goals": [
                 {
+                     "id": "g_001",
                     "name": "Java basics",
                     "task": [
                         {
@@ -26,6 +27,7 @@
                     "duration": 55
                 },
                 {
+                    "id": "g_002",
                     "name": "lift 150kgs deadlift",
                     "task": [
                         {
@@ -48,6 +50,7 @@
                     "duration": 180
                 },
                 {
+                    "id": "g_003",
                     "name": "BGMI Ace",
                     "task": [
                         {
@@ -70,6 +73,7 @@
                     "duration": 60
                 },
                 {
+                    "id": "g_004",
                     "name": "Improve Daily Routine",
                     "task": [
                         {
@@ -100,6 +104,13 @@
                     ],
                     "isCompleted": false,
                     "duration": 30
+                },
+                {
+                    "id": "g_005",
+                    "name": "play football daily for 30 days",
+                    "isCompleted": false,
+                    "task": [],
+                    "duration": "30"
                 }
             ],
             "Achievements": [

@@ -51,9 +51,7 @@ def progress():
                 })
             return goal_progress
     return []
-
-            
-            
+  
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -77,8 +75,6 @@ def login():
         return redirect(url_for('login'))
 
     return render_template('login.html')
-
-
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -137,8 +133,6 @@ def signup():
 
     return render_template('signup.html')
 
-
-
 @app.route('/dashboard')
 def dashboard():
     if not session.get('user'):
@@ -175,7 +169,6 @@ def dashboard():
         user=data,
         userdata=user_data
     )
-
 
 @app.route('/projects', methods=['GET', 'POST'])
 def projects():
@@ -228,7 +221,6 @@ def projects():
         return redirect(url_for('projects'))
     projects = user_data.get("projects", [])
     return render_template( 'projects.html', projects=projects )
-
 
 @app.route('/profile')
 def profile():
@@ -287,37 +279,27 @@ def profile():
         role = role
     )
      
-
 @app.route("/goals")
 def goals():
-
     with open(USERDATA_FILE, "r") as f:
         userdata = json.load(f)
-
     user_id = session.get("userId")
-
     user_data = {}
-
     for user in userdata["users"]:
         if user["id"] == user_id:
             user_data = user
             break
-
     goals = user_data.get("goals", [])
-
     total_goals = len(goals)
     completed_goals = 0
     active_goals = 0
-
     for goal in goals:
         if goal.get("isCompleted") == True:
             completed_goals += 1
         else:
             active_goals += 1
-
         total = len(goal["task"])
         completed = 0
-
         for task in goal["task"]:
             if task["isCompleted"]:
                 completed += 1
@@ -329,7 +311,6 @@ def goals():
         for task in goal["task"]:
             if not task["isCompleted"]:
                 goal["next_tasks"].append(task)
-
     return render_template(
         "goals.html",
         goals=goals,
@@ -337,8 +318,75 @@ def goals():
         completed_goals=completed_goals,
         active_goals=active_goals,
         task = task
-        
+        )
+    
+@app.route('/add_goal',methods=['POST'])
+def add_goal():
+    with open(USERDATA_FILE ,"r") as f:
+        userdata = json.load(f)
+    user_id = session.get("userId")
+    for user in userdata["users"]:
+        if user["id"] == user_id:
+            goals = user["goals"]
+            new_goal = {
+                "id":"g_" + str(len(goals) + 1).zfill(3),
+                "name": request.form["name"],
+                "isCompleted": False,
+                "task":[],
+                "duration": str(request.form["duration"])
+            }
+            goals.append(new_goal)
+            break
+    with open(USERDATA_FILE, "w") as f:
+        json.dump(userdata,f,indent=4)
+    return redirect('/goals')
+
+@app.route('/tasks')
+def tasks():
+
+    with open(USERDATA_FILE, "r") as f:
+        userdata = json.load(f)
+
+    user_id = session.get("userId")
+    selected_goal_id = request.args.get("goal_id")
+
+    all_tasks = []
+    for user in userdata["users"]:
+        if user["id"] == user_id:
+            for goal in user["goals"]:
+                if selected_goal_id and goal["id"] != selected_goal_id:
+                    continue
+                for task in goal.get("task", []):
+                    task_data = task.copy()
+                    task_data["goal_name"] = goal["name"]
+                    task_data["goal_id"] = goal["id"]
+                    all_tasks.append(task_data)
+            break
+    all_tasks.sort(key=lambda x: x.get("isCompleted", False))
+    return render_template(
+        "tasks.html",
+        tasks=all_tasks,
+        selected_goal_id=selected_goal_id
     )
+    
+@app.route('/complete_task/<goal_id>/<task_id>', methods=['POST'])
+def complete_task(goal_id, task_id):
+    with open(USERDATA_FILE, "r") as f:
+        userdata = json.load(f)
+    user_id = session.get("userId")
+    for user in userdata["users"]:
+        if user["id"] == user_id:
+            for goal in user["goals"]:
+                if goal["id"] == goal_id:
+                    for task in goal["task"]:
+                        if task["id"] == task_id:
+                            task["isCompleted"] = True
+                            break
+                    break
+        break
+    with open(USERDATA_FILE, "w") as f:
+        json.dump(userdata, f, indent=4)
+    return redirect(url_for('tasks'))
 
 @app.route('/logout')
 def logout():
